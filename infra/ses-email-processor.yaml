@@ -25,6 +25,23 @@ Resources:
     Properties:
       BucketName: !Sub "ses-incoming-${AWS::AccountId}"
 
+  EmailBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref EmailBucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: AllowSESPuts
+            Effect: Allow
+            Principal:
+              Service: ses.amazonaws.com
+            Action: "s3:PutObject"
+            Resource: !Sub "${EmailBucket.Arn}/*"
+            Condition:
+              StringEquals:
+                aws:SourceAccount: !Ref AWS::AccountId
+
   LambdaExecutionRole:
     Type: AWS::IAM::Role
     Properties:
