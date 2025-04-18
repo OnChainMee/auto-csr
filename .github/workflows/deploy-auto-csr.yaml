@@ -1,6 +1,7 @@
 name: Deploy SES Lambda
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - 'infra/lambda/**'
