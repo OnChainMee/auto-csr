@@ -6,7 +6,7 @@ on:
     paths:
       - 'infra/lambda/**'
       - 'infra/ses-email-processor.yaml'
-      - '.github/workflows/deploy.yaml'
+      - '.github/workflows/deploy-auto-csr.yaml'
 
 jobs:
   deploy:
