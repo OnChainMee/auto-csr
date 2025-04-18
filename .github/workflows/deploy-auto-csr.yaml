@@ -51,6 +51,7 @@ jobs:
           template: infra/ses-email-processor.yaml
           no-fail-on-empty-changeset: true
           capabilities: CAPABILITY_NAMED_IAM
+          timeout-in-minutes: 30
           parameter-overrides: >-
             LambdaCodeS3Bucket=${{ env.S3_BUCKET }},
             LambdaCodeS3Key=${{ env.S3_KEY }},
