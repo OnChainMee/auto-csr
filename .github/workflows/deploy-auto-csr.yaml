@@ -13,6 +13,9 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
+      AWS_REGION: us-east-1
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       S3_BUCKET: auto-csr-ses-lambda-bucket
       S3_KEY: lambda-package.zip
       STACK_NAME: auto-csr-stack
@@ -38,10 +41,6 @@ jobs:
       - name: Upload Lambda package to S3
         run: |
           aws s3 cp lambda-package.zip s3://${{ env.S3_BUCKET }}/${{ env.S3_KEY }} --region ${{ env.AWS_REGION }}
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: us-east-1
 
       - name: Deploy CloudFormation Stack
         uses: aws-actions/aws-cloudformation-github-deploy@v1
@@ -54,6 +53,3 @@ jobs:
             ReplyFromEmail=${{ secrets.REPLY_FROM_EMAIL }}
             LambdaCodeS3Bucket=${{ env.S3_BUCKET }}
             LambdaCodeS3Key=${{ env.S3_KEY }}
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
