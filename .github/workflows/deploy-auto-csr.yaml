@@ -51,7 +51,7 @@ jobs:
           template: infra/ses-email-processor.yaml
           no-fail-on-empty-changeset: true
           parameter-overrides: |
-            ReplyFromEmail="${{ env.REPLY_EMAIL }}"
-            VerifiedRecipientEmail="${{ env.FROM_EMAIL }}"
             LambdaCodeS3Bucket=${{ env.S3_BUCKET }}
             LambdaCodeS3Key=${{ env.S3_KEY }}
+            ReplyFromEmail="${{ env.REPLY_EMAIL }}"
+            VerifiedRecipientEmail="${{ env.FROM_EMAIL }}"
