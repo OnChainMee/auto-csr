@@ -19,8 +19,8 @@ jobs:
       S3_BUCKET: auto-csr-ses-lambda-bucket
       S3_KEY: lambda-package.zip
       STACK_NAME: auto-csr-stack
-      FROM_EMAIL: 'from@example.com'
-      REPLY_EMAIL: 'to@example.com'
+      FROM_EMAIL: ${{ secrets.VERIFIED_RECIPIENT_EMAIL }}
+      REPLY_EMAIL: ${{ secrets.REPLY_FROM_EMAIL }}
 
     steps:
       - name: Checkout code
@@ -50,8 +50,8 @@ jobs:
           name: ${{ env.STACK_NAME }}
           template: infra/ses-email-processor.yaml
           no-fail-on-empty-changeset: true
-          parameter-overrides: |
-            LambdaCodeS3Bucket=${{ env.S3_BUCKET }}
-            LambdaCodeS3Key=${{ env.S3_KEY }}
-            ReplyFromEmail="${{ env.REPLY_EMAIL }}"
-            VerifiedRecipientEmail="${{ env.FROM_EMAIL }}"
+          parameter-overrides: >-
+            LambdaCodeS3Bucket=${{ env.S3_BUCKET }},
+            LambdaCodeS3Key=${{ env.S3_KEY }},
+            ReplyFromEmail=${{ env.REPLY_EMAIL }},
+            VerifiedRecipientEmail=${{ env.FROM_EMAIL }}
