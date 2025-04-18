@@ -2,11 +2,6 @@ name: Deploy SES Lambda
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'infra/lambda/**'
-      - 'infra/ses-email-processor.yaml'
-      - '.github/workflows/deploy-auto-csr.yaml'
 
 jobs:
   deploy:
@@ -31,29 +26,29 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Zip Lambda function
-        run: |
-          cd infra/lambda
-          zip -r ../../lambda-package.zip .
+      #- name: Zip Lambda function
+      #  run: |
+      #    cd infra/lambda
+      #    zip -r ../../lambda-package.zip .
 
-      - name: Configure AWS CLI
-        run: |
-          pip install awscli
+      #- name: Configure AWS CLI
+      #  run: |
+      #    pip install awscli
 
-      - name: Upload Lambda package to S3
-        run: |
-          aws s3 cp lambda-package.zip s3://${{ env.S3_BUCKET }}/${{ env.S3_KEY }} --region ${{ env.AWS_REGION }}
+      #- name: Upload Lambda package to S3
+      #  run: |
+      #    aws s3 cp lambda-package.zip s3://${{ env.S3_BUCKET }}/${{ env.S3_KEY }} --region ${{ env.AWS_REGION }}
 
-      - name: Deploy CloudFormation Stack
-        uses: aws-actions/aws-cloudformation-github-deploy@v1
-        with:
-          name: ${{ env.STACK_NAME }}
-          template: infra/ses-email-processor.yaml
-          no-fail-on-empty-changeset: true
-          capabilities: CAPABILITY_NAMED_IAM
-          timeout-in-minutes: 30
-          parameter-overrides: >-
-            LambdaCodeS3Bucket=${{ env.S3_BUCKET }},
-            LambdaCodeS3Key=${{ env.S3_KEY }},
-            ReplyFromEmail=${{ env.REPLY_EMAIL }},
-            VerifiedRecipientEmail=${{ env.FROM_EMAIL }}
+      #- name: Deploy CloudFormation Stack
+      #  uses: aws-actions/aws-cloudformation-github-deploy@v1
+      #  with:
+      #    name: ${{ env.STACK_NAME }}
+      #    template: infra/ses-email-processor.yaml
+      #    no-fail-on-empty-changeset: true
+      #    capabilities: CAPABILITY_NAMED_IAM
+      #    timeout-in-minutes: 30
+      #    parameter-overrides: >-
+      #      LambdaCodeS3Bucket=${{ env.S3_BUCKET }},
+      #      LambdaCodeS3Key=${{ env.S3_KEY }},
+      #      ReplyFromEmail=${{ env.REPLY_EMAIL }},
+      #      VerifiedRecipientEmail=${{ env.FROM_EMAIL }}
