@@ -19,8 +19,10 @@ jobs:
       S3_BUCKET: auto-csr-ses-lambda-bucket
       S3_KEY: lambda-package.zip
       STACK_NAME: auto-csr-stack
-      FROM_EMAIL: ${{ secrets.VERIFIED_RECIPIENT_EMAIL }}
-      REPLY_EMAIL: ${{ secrets.REPLY_FROM_EMAIL }}
+      FROM_EMAIL: "from@example.com"
+      REPLY_EMAIL: "to@example.com"
+      # FROM_EMAIL: ${{ secrets.VERIFIED_RECIPIENT_EMAIL }}
+      # REPLY_EMAIL: ${{ secrets.REPLY_FROM_EMAIL }}
 
     steps:
       - name: Checkout code
