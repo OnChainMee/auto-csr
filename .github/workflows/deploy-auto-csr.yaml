@@ -53,3 +53,5 @@ jobs:
             ReplyFromEmail=${{ secrets.REPLY_FROM_EMAIL }}
             LambdaCodeS3Bucket=${{ env.S3_BUCKET }}
             LambdaCodeS3Key=${{ env.S3_KEY }}
+        env:
+          AWS_REGION: ${{ env.AWS_REGION }}
