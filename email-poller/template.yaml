@@ -1,6 +1,23 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Deploys the Email Poller Python Lambda
 
+Parameters:
+  CodeBucket:
+    Type: String
+    Description: S3 bucket where Lambda code is stored
+
+  CodeKey:
+    Type: String
+    Description: Path to Lambda zip in S3
+
+  PollInterval:
+    Type: Number
+    Default: 10
+    Description: Polling interval in minutes
+
+Conditions:
+  IsOneMinute: !Equals [!Ref PollInterval, 1]
+
 Resources:
   EmailPollerFunction:
     Type: AWS::Lambda::Function
@@ -21,7 +38,13 @@ Resources:
       Name: email-poller-schedule
       Description: Triggers the Email Poller Lambda periodically
       ScheduleExpression:
-        Fn::Sub: "rate(${PollInterval} minute)"
+        Fn::Join:
+          - ""
+          - - "rate("
+            - !Ref PollInterval
+            - " "
+            - !If [IsOneMinute, "minute", "minutes"]
+            - ")"
       State: ENABLED
       Targets:
         - Arn: !GetAtt EmailPollerFunction.Arn
@@ -61,17 +84,3 @@ Resources:
                   - logs:DescribeLogGroups
                   - logs:DescribeLogStreams
                 Resource: "*"
-
-Parameters:
-  CodeBucket:
-    Type: String
-    Description: S3 bucket where Lambda code is stored
-
-  CodeKey:
-    Type: String
-    Description: Path to Lambda zip in S3
-
-  PollInterval:
-    Type: Number
-    Default: 10
-    Description: Polling interval in minutes
