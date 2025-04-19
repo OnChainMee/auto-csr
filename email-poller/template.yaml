@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Deploys the Email Poller Python Lambda
+Description: Deploys the Email Poller Python Lambda v2
 
 Parameters:
   CodeBucket:
@@ -22,7 +22,7 @@ Resources:
   EmailPollerFunction:
     Type: AWS::Lambda::Function
     Properties:
-      FunctionName: email-poller
+      FunctionName: email-poller-v2
       Runtime: python3.10
       Handler: main.main
       Role: !GetAtt EmailPollerLambdaRole.Arn
@@ -35,7 +35,7 @@ Resources:
   EmailPollerEventRule:
     Type: AWS::Events::Rule
     Properties:
-      Name: email-poller-schedule
+      Name: email-poller-schedule-v2
       Description: Triggers the Email Poller Lambda periodically
       ScheduleExpression:
         Fn::Join:
@@ -61,7 +61,7 @@ Resources:
   EmailPollerLambdaRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: email-poller-lambda-role
+      RoleName: email-poller-lambda-role-v2
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
