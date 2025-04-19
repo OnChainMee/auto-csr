@@ -50,6 +50,12 @@ Resources:
         - Arn: !GetAtt EmailPollerFunction.Arn
           Id: EmailPollerTarget
 
+  TriggerPollerOnce:
+    Type: Custom::TriggerOnce
+    Properties:
+      ServiceToken: !GetAtt EmailPollerFunction.Arn
+      Reason: Initial poll after deployment
+
   EmailPollerLambdaPermission:
     Type: AWS::Lambda::Permission
     Properties:
