@@ -1,7 +1,7 @@
 from config import get_credentials
 from gmail_client import build_gmail_service, list_latest_messages, read_message
 
-def main():
+def main(event, context):
     #creds = get_credentials()
     #service = build_gmail_service(creds)
     #last_seen_id = None
@@ -19,6 +19,11 @@ def main():
         #last_seen_id = new_ids[0]
     else:
         print("📭 No new messages.")
+
+    return {
+        "statusCode": 200,
+        "body": "Poll complete"
+    }
 
 
 if __name__ == '__main__':
