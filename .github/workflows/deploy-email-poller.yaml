@@ -88,3 +88,10 @@ jobs:
               CodeBucket=$BUCKET_NAME \
               CodeKey=$CODE_KEY \
             --capabilities CAPABILITY_NAMED_IAM
+
+      - name: Trigger Lambda once after deploy
+        run: |
+          aws lambda invoke \
+            --function-name email-poller \
+            --payload '{}' \
+            /dev/stdout
