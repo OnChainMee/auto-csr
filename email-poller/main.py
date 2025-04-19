@@ -2,9 +2,9 @@ from config import get_credentials
 from gmail_client import build_gmail_service, list_latest_messages, read_message
 
 def main(event, context):
-    #creds = get_credentials()
-    #service = build_gmail_service(creds)
-    #last_seen_id = None
+    creds = get_credentials()
+    # service = build_gmail_service(creds)
+    # last_seen_id = None
 
     print("📬 Checking for new messages...")
 
@@ -14,9 +14,9 @@ def main(event, context):
 
     if new_ids:
         print(f"✅ Found {len(new_ids)} new message(s)")
-        #for msg_id in reversed(new_ids):
-        #    read_message(service, msg_id)
-        #last_seen_id = new_ids[0]
+        # for msg_id in reversed(new_ids):
+        #     read_message(service, msg_id)
+        # last_seen_id = new_ids[0]
     else:
         print("📭 No new messages.")
 
@@ -27,5 +27,4 @@ def main(event, context):
 
 
 if __name__ == '__main__':
-    main()
-
+    main(None, None)

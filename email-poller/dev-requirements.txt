@@ -1,1 +1,4 @@
+-r requirements.txt
+boto3
+botocore
 flake8
