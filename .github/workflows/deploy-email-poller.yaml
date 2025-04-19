@@ -92,6 +92,6 @@ jobs:
       - name: Trigger Lambda once after deploy
         run: |
           aws lambda invoke \
-            --function-name email-poller \
+            --function-name email-poller-v2 \
             --payload '{}' \
             /dev/stdout
