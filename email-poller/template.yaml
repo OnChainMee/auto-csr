@@ -15,6 +15,26 @@ Resources:
         S3Bucket: !Ref CodeBucket
         S3Key: !Ref CodeKey
 
+  EmailPollerEventRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: email-poller-schedule
+      Description: Triggers the Email Poller Lambda periodically
+      ScheduleExpression:
+        Fn::Sub: "rate(${PollInterval} minute)"
+      State: ENABLED
+      Targets:
+        - Arn: !GetAtt EmailPollerFunction.Arn
+          Id: EmailPollerTarget
+
+  EmailPollerLambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref EmailPollerFunction
+      Action: lambda:InvokeFunction
+      Principal: events.amazonaws.com
+      SourceArn: !GetAtt EmailPollerEventRule.Arn
+
   EmailPollerLambdaRole:
     Type: AWS::IAM::Role
     Properties:
@@ -50,3 +70,8 @@ Parameters:
   CodeKey:
     Type: String
     Description: Path to Lambda zip in S3
+
+  PollInterval:
+    Type: Integer
+    Default: 10
+    Description: Polling interval in minutes
