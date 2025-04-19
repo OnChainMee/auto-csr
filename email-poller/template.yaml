@@ -72,6 +72,6 @@ Parameters:
     Description: Path to Lambda zip in S3
 
   PollInterval:
-    Type: Integer
+    Type: Number
     Default: 10
     Description: Polling interval in minutes
