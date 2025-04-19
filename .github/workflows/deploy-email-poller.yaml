@@ -26,10 +26,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Zip Lambda source code
+      - name: Install dependencies and zip Lambda package
         run: |
-          cd email-poller
-          zip ../${ZIP_PATH} main.py config.py gmail_client.py
+          mkdir -p package
+          pip install -r email-poller/requirements.txt -t package
+          cp email-poller/*.py package/
+          cd package
+          zip -r ../${ZIP_PATH} .
           cd ..
 
       - name: Configure AWS credentials
