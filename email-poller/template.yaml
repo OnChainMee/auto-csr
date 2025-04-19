@@ -1,0 +1,52 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Deploys the Email Poller Python Lambda
+
+Resources:
+  EmailPollerFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: email-poller
+      Runtime: python3.10
+      Handler: main.lambda_handler
+      Role: !GetAtt EmailPollerLambdaRole.Arn
+      Timeout: 30
+      MemorySize: 128
+      Code:
+        S3Bucket: !Ref CodeBucket
+        S3Key: !Ref CodeKey
+
+  EmailPollerLambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: email-poller-lambda-role
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: LambdaLogging
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                  - logs:StartQuery
+                  - logs:GetQueryResults
+                  - logs:DescribeLogGroups
+                  - logs:DescribeLogStreams
+                Resource: "*"
+
+Parameters:
+  CodeBucket:
+    Type: String
+    Description: S3 bucket where Lambda code is stored
+
+  CodeKey:
+    Type: String
+    Description: Path to Lambda zip in S3
