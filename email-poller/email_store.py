@@ -17,6 +17,8 @@ class EmailStore:
 
         # Check if object already exists
         try:
+            print(f"🔍 Checking if email {key}",
+                  "exists in {self.bucket_name}...")
             self.s3_client.head_object(Bucket=self.bucket_name, Key=key)
             print(f"🟡 Email {message_id} already exists in S3 — skipping.")
             return False  # Already exists
