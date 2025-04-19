@@ -1,4 +1,5 @@
-name: Deploy Email Poller Lambda App via CloudFormation
+name: Deploy Email Poller Lambda
+description: Deploys the Email Poller Lambda function to AWS using CloudFormation.
 
 on:
   workflow_dispatch:
@@ -36,10 +37,15 @@ jobs:
         run: |
           if ! aws s3api head-bucket --bucket "$BUCKET_NAME" 2>/dev/null; then
             echo "Bucket does not exist. Creating: $BUCKET_NAME"
-            aws s3api create-bucket \
-              --bucket "$BUCKET_NAME" \
-              --region "$REGION" \
-              --create-bucket-configuration LocationConstraint="$REGION"
+            if [ "$REGION" = "us-east-1" ]; then
+              aws s3api create-bucket \
+                --bucket "$BUCKET_NAME"
+            else
+              aws s3api create-bucket \
+                --bucket "$BUCKET_NAME" \
+                --region "$REGION" \
+                --create-bucket-configuration LocationConstraint="$REGION"
+            fi
           else
             echo "Bucket already exists: $BUCKET_NAME"
           fi
