@@ -54,12 +54,12 @@ jobs:
         run: |
           aws s3 cp $ZIP_PATH s3://$BUCKET_NAME/$CODE_KEY
 
-      #- name: Deploy CloudFormation stack
-      #  run: |
-      #    aws cloudformation deploy \
-      #      --stack-name $STACK_NAME \
-      #      --template-file $TEMPLATE_PATH \
-      #      --parameter-overrides \
-      #        CodeBucket=$BUCKET_NAME \
-      #        CodeKey=$CODE_KEY \
-      #      --capabilities CAPABILITY_NAMED_IAM
+      - name: Deploy CloudFormation stack
+        run: |
+          aws cloudformation deploy \
+            --stack-name $STACK_NAME \
+            --template-file $TEMPLATE_PATH \
+            --parameter-overrides \
+              CodeBucket=$BUCKET_NAME \
+              CodeKey=$CODE_KEY \
+            --capabilities CAPABILITY_NAMED_IAM
