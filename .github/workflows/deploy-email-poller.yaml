@@ -12,7 +12,7 @@ on:
 
 env:
   REGION: us-east-1
-  STACK_NAME: email-poller-stack
+  STACK_NAME: email-poller-stack-v2
   BUCKET_NAME: auto-csr-lambda-code
   CODE_KEY: email-poller/email-poller-${{ github.sha }}.zip
   TEMPLATE_PATH: email-poller/template.yaml
