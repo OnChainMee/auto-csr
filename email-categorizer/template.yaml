@@ -1,0 +1,5 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: SageMaker endpoint for prompt-based email classification using FLAN-T5
+
+Resources:
+

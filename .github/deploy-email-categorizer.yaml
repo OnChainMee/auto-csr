@@ -1,0 +1,29 @@
+name: Deploy Email Categorizer LLM
+description: Deploys the Email Categorizer LLM to AWS using CloudFormation.
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'email-categorizer/**'
+      - '.github/workflows/deploy-email-categorizer.yaml'
+  workflow_dispatch:
+
+env:
+  REGION: us-east-1
+  STACK_NAME: email-categorizer-stack
+  TEMPLATE_PATH: email-categorizer/template.yaml
+
+jobs:
+  deploy:
+    steps:
+      - name: Deploy LLM via CloudFormation stack
+        run: |
+          aws cloudformation deploy \
+            --template-file ${{ env.TEMPLATE_PATH }} \
+            --stack-name ${{ env.STACK_NAME }} \
+            --capabilities CAPABILITY_IAM \
+            --parameter-overrides \
+              Region=${{ env.REGION }} \
+            --region ${{ env.REGION }}
