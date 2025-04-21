@@ -32,6 +32,27 @@ This project will use Amazon Web Services for AI capabilities (such as for the L
 
 ## Project Design
 
+### Email Front-end
+
+A Python lambda function polls Gmail for new mail. New mails are downloaded and
+then stored in an S3 bucket to enable processing by the Auto CSR email
+processor.
+
+### Email Processor
+
+The email processor reads emails saved to the S3 bucket and uses an LLM to
+process them. The first round of processing categorizes the nature of the
+email into one of the following categories.
+
+- help with return
+- customer complaint
+- request for information
+- spam / not relevant / no response
+
+The categorization is done by the LLM given an a useful prompt ("as a
+customer service representative..."), the email text, and the categories. The
+output is the LLM's classification of the email.
+
 
 
 ## Connection to Ethical AI
