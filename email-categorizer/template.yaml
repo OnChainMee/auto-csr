@@ -27,8 +27,8 @@ Resources:
   EmailCategorizerModel:
     Type: AWS::SageMaker::Model
     Properties:
-      ExecutionRoleArn: !GetAtt SageMakerExecutionRole.Arn
-      ModelName: email-processor-llm-model
+      ExecutionRoeArncat-llmxecutionRole.Arn
+      ModelName: mailcat-llm
       PrimaryContainer:
         Image: 763104351884.dkr.ecr.us-east-1.amazonaws.com/huggingface-pytorch-inference:2.1.0-transformers4.37.0-cpu-py310-ubuntu22.04
         Environment:
