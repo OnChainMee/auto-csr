@@ -39,7 +39,7 @@ Resources:
     Type: AWS::SageMaker::EndpointConfig
     DependsOn: EmailCategorizerModel
     Properties:
-      EndpointConfigName: email-processor-endpoint-config
+      EndpointConfigName: email-categorizer-endpoint-config
       ProductionVariants:
         - VariantName: AllTraffic
           ModelName: email-categorizer-model
@@ -48,9 +48,10 @@ Resources:
 
   EmailCategorizerEndpoint:
     Type: AWS::SageMaker::Endpoint
+    DependsOn: EmailCategorizerEndpointConfig
     Properties:
-      EndpointName: email-processor-endpoint
-      EndpointConfigName: !Ref EmailCategorizerEndpointConfig
+      EndpointName: email-categorizer-endpoint
+      EndpointConfigName: email-categorizer-endpoint-config
 
 Outputs:
   EndpointName:
