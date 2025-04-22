@@ -30,7 +30,7 @@ Resources:
       ExecutionRoleArn: !GetAtt SageMakerExecutionRole.Arn
       ModelName: email-processor-llm-model
       PrimaryContainer:
-        Image: 763104351884.dkr.ecr.us-east-1.amazonaws.com/huggingface-pytorch-inference:1.13.1-transformers4.26.0-cpu-py39
+        Image: 763104351884.dkr.ecr.us-east-1.amazonaws.com/huggingface-pytorch-inference:2.1.1-cpu-py310
         Environment:
           HF_MODEL_ID: "google/flan-t5-base"
           HF_TASK: "text2text-generation"
