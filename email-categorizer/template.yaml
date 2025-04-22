@@ -5,7 +5,7 @@ Resources:
   SageMakerExecutionRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: EmailProcessorSageMakerRole
+      RoleName: EmailCategorizerSageMakerRole
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -23,3 +23,39 @@ Resources:
                   - s3:GetObject
                   - s3:ListBucket
                 Resource: "*"
+
+  EmailCategorizerModel:
+    Type: AWS::SageMaker::Model
+    Properties:
+      ExecutionRoleArn: !GetAtt SageMakerExecutionRole.Arn
+      ModelName: email-processor-llm-model
+      PrimaryContainer:
+        Image: 763104351884.dkr.ecr.us-east-1.amazonaws.com/huggingface-pytorch-inference:1.13.1-transformers4.26.0-cpu-py39
+        Environment:
+          HF_MODEL_ID: "google/flan-t5-base"
+          HF_TASK: "text2text-generation"
+
+  EmailCategorizerEndpointConfig:
+    Type: AWS::SageMaker::EndpointConfig
+    Properties:
+      EndpointConfigName: email-processor-endpoint-config
+      ProductionVariants:
+        - VariantName: AllTraffic
+          ModelName: !Ref EmailCategorizerModel
+          InitialInstanceCount: 1
+          InstanceType: ml.m5.large
+
+  EmailCategorizerEndpoint:
+    Type: AWS::SageMaker::Endpoint
+    Properties:
+      EndpointName: email-processor-endpoint
+      EndpointConfigName: !Ref EmailCategorizerEndpointConfig
+
+Outputs:
+  EndpointName:
+    Description: SageMaker Endpoint Name
+    Value: !Ref EmailCategorizerEndpoint
+
+  SageMakerExecutionRoleArn:
+    Description: IAM Role used by SageMaker Model
+    Value: !GetAtt SageMakerExecutionRole.Arn
