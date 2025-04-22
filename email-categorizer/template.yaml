@@ -33,9 +33,11 @@ Resources:
                 Resource: "*"
               - Effect: Allow
                 Action:
-                  - ecr:BatchGetImage
+                  - ecr:GetAuthorizationToken
+                  - ecr:BatchCheckLayerAvailability
                   - ecr:GetDownloadUrlForLayer
-                Resource: arn:aws:ecr:us-east-1:763104351884:repository/huggingface-pytorch-inference
+                  - ecr:BatchGetImage
+                Resource: "*"
 
   EmailCategorizerModel:
     Type: AWS::SageMaker::Model
