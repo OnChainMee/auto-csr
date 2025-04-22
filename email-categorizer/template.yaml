@@ -23,6 +23,19 @@ Resources:
                   - s3:GetObject
                   - s3:ListBucket
                 Resource: "*"
+        - PolicyName: SageMakerBasicExecution
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                Resource: "*"
+              - Effect: Allow
+                Action:
+                  - ecr:BatchGetImage
+                  - ecr:GetDownloadUrlForLayer
+                Resource: arn:aws:ecr:us-east-1:763104351884:repository/huggingface-pytorch-inference
 
   EmailCategorizerModel:
     Type: AWS::SageMaker::Model
