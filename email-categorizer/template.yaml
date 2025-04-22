@@ -28,7 +28,7 @@ Resources:
     Type: AWS::SageMaker::Model
     Properties:
       ExecutionRoleArn: !GetAtt SageMakerExecutionRole.Arn
-      ModelName: mailcatllm
+      ModelName: email-categorizer-model
       PrimaryContainer:
         Image: 763104351884.dkr.ecr.us-east-1.amazonaws.com/huggingface-pytorch-inference:2.1.0-transformers4.37.0-cpu-py310-ubuntu22.04
         Environment:
@@ -41,7 +41,7 @@ Resources:
       EndpointConfigName: email-processor-endpoint-config
       ProductionVariants:
         - VariantName: AllTraffic
-          ModelName: !Ref EmailCategorizerModel
+          ModelName: email-categorizer-model
           InitialInstanceCount: 1
           InstanceType: ml.m5.large
 
