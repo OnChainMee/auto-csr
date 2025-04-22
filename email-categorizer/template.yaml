@@ -37,6 +37,7 @@ Resources:
 
   EmailCategorizerEndpointConfig:
     Type: AWS::SageMaker::EndpointConfig
+    DependsOn: EmailCategorizerModel
     Properties:
       EndpointConfigName: email-processor-endpoint-config
       ProductionVariants:
