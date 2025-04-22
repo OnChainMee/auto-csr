@@ -35,5 +35,5 @@ jobs:
           aws cloudformation deploy \
             --template-file ${{ env.TEMPLATE_PATH }} \
             --stack-name ${{ env.STACK_NAME }} \
-            --capabilities CAPABILITY_IAM \
+            --capabilities CAPABILITY_NAMED_IAM \
             --region ${{ env.REGION }}
