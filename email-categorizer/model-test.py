@@ -21,10 +21,10 @@ Answer: help with return
 Email: You sent me the wrong item and I need to send it back so you can send the correct thing.
 Answer: help with return
 
-Email: I’m frustrated with the lack of updates on my order.
+Email: I'm frustrated with the lack of updates on my order.
 Answer: customer complaint
 
-Email: What size should I order if I’m usually a medium?
+Email: What size should I order if I'm usually a medium?
 Answer: request for information
 
 Email: Your site is not working.
