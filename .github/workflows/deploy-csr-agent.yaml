@@ -1,0 +1,35 @@
+name: Deploy CSR Agent
+description: Deploys the CSR Agent to AWS using CloudFormation.
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'csr-agent/**'
+      - '.github/workflows/deploy-csr-agent.yaml'
+  workflow_dispatch:
+
+env:
+  REGION: us-east-1
+  STACK_NAME: csr-agent-stack
+  TEMPLATE_PATH: csr-agent/template.yaml
+
+jobs:
+  deploy:
+  runs-on: ubuntu-latest
+
+  steps:
+    - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.REGION }}
+
+    - name: Deploy CloudFormation Stack
+        run: |
+          aws cloudformation deploy \
+            --stack-name $STACK_NAME \
+            --template-file $TEMPLATE_PATH \
+            --capabilities CAPABILITY_NAMED_IAM
