@@ -38,7 +38,6 @@ Resources:
                   - s3:ListBucket
                 Resource: "*"
 
-Resources:
   CsrAgentFunction:
     Type: AWS::Lambda::Function
     Properties:
