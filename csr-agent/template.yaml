@@ -37,3 +37,25 @@ Resources:
                   - s3:GetObject
                   - s3:ListBucket
                 Resource: "*"
+
+Resources:
+  CsrAgentFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: csr-agent
+      Runtime: python3.10
+      Handler: agent.new_email
+      Role: !GetAtt CsrAgentLambdaRole.Arn
+      Timeout: 30
+      MemorySize: 128
+      Code:
+        S3Bucket: !Ref CodeBucket
+        S3Key: !Ref CodeKey
+      Environment:
+        Variables:
+          INBOUND_EMAIL_BUCKET: !Ref InboundEmailBucket
+
+  InboundEmailBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "email-poller-stack-v2-inbound-emails"
