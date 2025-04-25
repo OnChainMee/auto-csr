@@ -45,7 +45,7 @@ Resources:
       FunctionName: csr-agent
       Runtime: python3.10
       Handler: agent.new_email
-      Role: !GetAtt CsrAgentLambdaRole.Arn
+      Role: !GetAtt CsrAgentRole.Arn
       Timeout: 30
       MemorySize: 128
       Code:
