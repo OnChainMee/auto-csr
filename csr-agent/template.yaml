@@ -1,6 +1,15 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Deploys the CSR Agent Stack
 
+Parameters:
+  CodeBucket:
+    Type: String
+    Description: S3 bucket where Lambda code is stored
+
+  CodeKey:
+    Type: String
+    Description: Path to Lambda zip in S3
+
 Resources:
   CsrAgentRole:
     Type: AWS::IAM::Role

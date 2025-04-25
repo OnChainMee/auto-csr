@@ -84,4 +84,7 @@ jobs:
           aws cloudformation deploy \
             --stack-name $STACK_NAME \
             --template-file $TEMPLATE_PATH \
+            --parameter-overrides \
+              CodeBucket=$BUCKET_NAME \
+              CodeKey=$CODE_KEY \
             --capabilities CAPABILITY_NAMED_IAM
