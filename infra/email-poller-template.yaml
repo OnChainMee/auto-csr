@@ -110,10 +110,10 @@ Resources:
               - Effect: Allow
                 Action:
                   - s3:ListBucket
-                Resource: !GetAtt InboundEmailBucket.Arn
+                Resource: !Sub "arn:aws:s3:::${InboundEmailBucket}"
               - Effect: Allow
                 Action:
                   - s3:PutObject
                   - s3:HeadObject
                   - s3:GetObject
-                Resource: !Sub "${InboundEmailBucket.Arn}/*"
+                Resource: !Sub "arn:aws:s3:::${InboundEmailBucket}"
