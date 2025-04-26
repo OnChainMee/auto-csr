@@ -10,6 +10,11 @@ Parameters:
     Type: String
     Description: Path to Lambda zip in S3
 
+  InboundEmailBucket:
+    Type: String
+    Description: S3 bucket for inbound emails
+    Default: !Sub "email-poller-stack-v2-inbound-emails"
+
 Resources:
   CsrAgentRole:
     Type: AWS::IAM::Role
@@ -62,8 +67,3 @@ Resources:
       Environment:
         Variables:
           INBOUND_EMAIL_BUCKET: !Ref InboundEmailBucket
-
-  InboundEmailBucket:
-    Type: AWS::S3::Bucket
-    Properties:
-      BucketName: !Sub "email-poller-stack-v2-inbound-emails"
