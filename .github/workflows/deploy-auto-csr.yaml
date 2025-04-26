@@ -1,5 +1,5 @@
 name: Deploy Auto CSR
-description: Deploys the Auto CSR to AWS using CloudFormation.
+description: Deploys the Auto CSR (agent and email poller) to AWS using CloudFormation.
 
 on:
   push:
@@ -9,6 +9,7 @@ on:
       - 'csr-agent/**'
       - 'email-poller/**'
       - '.github/workflows/deploy-auto-csr.yaml'
+      - 'infra/auto-csr-template.yaml'
   workflow_dispatch:
 
 env:
