@@ -39,7 +39,7 @@ jobs:
           mkdir -p package
           pip install -r requirements.txt -t package
           cp csr-agent/*.py package/
-          cp eamil-poller/*.py package/
+          cp email-poller/*.py package/
           cd package
           zip -r ../${ZIP_PATH} .
           cd ..
