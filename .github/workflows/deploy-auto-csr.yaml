@@ -125,5 +125,6 @@ jobs:
             --parameter-overrides \
               CodeBucket=$BUCKET_NAME \
               CodeKey=$CODE_KEY \
+              InboundEmailBucket=auto-csr-inbound-email-bucket \
             --capabilities CAPABILITY_NAMED_IAM
     
