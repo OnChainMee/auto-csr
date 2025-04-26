@@ -68,15 +68,18 @@ Resources:
         Variables:
           INBOUND_EMAIL_BUCKET: !Ref InboundEmailBucket
 
+  CsrAgentPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref CsrAgentFunction
+      Action: lambda:InvokeFunction
+      Principal: s3.amazonaws.com
+      SourceArn: !GetAtt TriggerBucket.Arn
+
   TriggerBucket:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Ref InboundEmailBucket
-
-  S3EventNotification:
-    Type: AWS::S3::BucketNotification
-    Properties:
-      Bucket: !Ref TriggerBucket
       NotificationConfiguration:
         LambdaConfigurations:
           - Event: s3:ObjectCreated:*
