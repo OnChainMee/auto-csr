@@ -10,11 +10,13 @@ on:
       - 'email-poller/**'
       - '.github/workflows/deploy-auto-csr.yaml'
       - 'infra/auto-csr-template.yaml'
+      - 'infra/email-poller-template.yaml'
   workflow_dispatch:
 
 env:
   REGION: us-east-1
-  STACK_NAME: auto-csr-stack
+  CSR_STACK_NAME: auto-csr-stack
+  EMAIL_STACK_NAME: email-poller-stack-v2
   BUCKET_NAME: auto-csr-code-bucket
   CODE_KEY: auto-csr/auto-csr-${{ github.sha }}.zip
   TEMPLATE_PATH: infra/auto-csr-template.yaml
@@ -82,10 +84,10 @@ jobs:
         run: |
           aws s3 cp $ZIP_PATH s3://$BUCKET_NAME/$CODE_KEY
 
-      - name: Deploy CloudFormation stack
+      - name: Deploy CSR Agent CloudFormation stack
         run: |
           aws cloudformation deploy \
-            --stack-name $STACK_NAME \
+            --stack-name $CSR_STACK_NAME \
             --template-file $TEMPLATE_PATH \
             --parameter-overrides \
               CodeBucket=$BUCKET_NAME \
@@ -113,3 +115,14 @@ jobs:
                 }
               ]
             }"
+
+      - name: Deploy Email Poller CloudFormation stack
+        run: |
+          aws cloudformation deploy \
+            --stack-name $EMAIL_STACK_NAME \
+            --template-file $TEMPLATE_PATH \
+            --parameter-overrides \
+              CodeBucket=$BUCKET_NAME \
+              CodeKey=$CODE_KEY \
+            --capabilities CAPABILITY_NAMED_IAM
+    
