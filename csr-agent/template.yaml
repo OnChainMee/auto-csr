@@ -13,7 +13,7 @@ Parameters:
   InboundEmailBucket:
     Type: String
     Description: S3 bucket for inbound emails
-    Default: !Sub "email-poller-stack-v2-inbound-emails"
+    Default: "email-poller-stack-v2-inbound-emails"
 
 Resources:
   CsrAgentRole:
