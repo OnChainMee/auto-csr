@@ -66,12 +66,12 @@ Resources:
       FunctionName: !Ref CsrAgentFunction
       Action: lambda:InvokeFunction
       Principal: s3.amazonaws.com
-      SourceArn: !GetAtt TriggerBucket.Arn
+      SourceArn: !Sub arn:aws:s3:::${TriggerBucket}
 
   TriggerBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: inbound-email-bucket
+      BucketName: auto-csr-inbound-email-bucket
       NotificationConfiguration:
         LambdaConfigurations:
           - Event: s3:ObjectCreated:*
