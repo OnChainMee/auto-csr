@@ -91,3 +91,25 @@ jobs:
               CodeBucket=$BUCKET_NAME \
               CodeKey=$CODE_KEY \
             --capabilities CAPABILITY_NAMED_IAM
+
+      - name: Attach S3 Bucket Notification to Lambda
+        run: |
+          BUCKET_NAME=auto-csr-inbound-email-bucket
+          LAMBDA_FUNCTION_NAME=csr-agent
+
+          # Lookup the full ARN of the Lambda
+          LAMBDA_ARN=$(aws lambda get-function --function-name $LAMBDA_FUNCTION_NAME --query 'Configuration.FunctionArn' --output text)
+
+          echo "Setting S3 event notification for bucket $BUCKET_NAME to invoke Lambda $LAMBDA_ARN"
+
+          aws s3api put-bucket-notification-configuration \
+            --bucket "$BUCKET_NAME" \
+            --notification-configuration "{
+              \"LambdaFunctionConfigurations\": [
+                {
+                  \"Id\": \"InvokeCsrAgentLambda\",
+                  \"LambdaFunctionArn\": \"$LAMBDA_ARN\",
+                  \"Events\": [\"s3:ObjectCreated:*\"]
+                }
+              ]
+            }"

@@ -72,7 +72,7 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: auto-csr-inbound-email-bucket
-      NotificationConfiguration:
-        LambdaConfigurations:
-          - Event: s3:ObjectCreated:*
-            Function: !GetAtt CsrAgentFunction.Arn
+      # NotificationConfiguration:
+      #   LambdaConfigurations:
+      #     - Event: s3:ObjectCreated:*
+      #       Function: !GetAtt CsrAgentFunction.Arn
