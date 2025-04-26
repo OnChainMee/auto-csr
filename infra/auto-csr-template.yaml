@@ -59,9 +59,6 @@ Resources:
       Code:
         S3Bucket: !Ref CodeBucket
         S3Key: !Ref CodeKey
-      Environment:
-        Variables:
-          INBOUND_EMAIL_BUCKET: !Ref TriggerBucket
 
   CsrAgentPermission:
     Type: AWS::Lambda::Permission
