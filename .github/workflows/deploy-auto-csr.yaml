@@ -15,8 +15,8 @@ on:
 env:
   REGION: us-east-1
   STACK_NAME: auto-csr-stack
-  BUCKET_NAME: auto-csr-bucket
-  EMAIL_BUCKET_NAME: inbound-email-bucket
+  BUCKET_NAME: auto-csr-code-bucket
+  EMAIL_BUCKET_NAME: auto-csr-inbound-email-bucket
   CODE_KEY: auto-csr/auto-csr-${{ github.sha }}.zip
   TEMPLATE_PATH: infra/auto-csr-template.yaml
   ZIP_PATH: auto-csr-${{ github.sha }}.zip
