@@ -43,4 +43,40 @@ jobs:
           cd package
           zip -r ../${ZIP_PATH} .
           cd ..
-  
+
+      - name: Create bucket if it doesn't exist
+        run: |
+          if ! aws s3api head-bucket --bucket "$BUCKET_NAME" 2>/dev/null; then
+            echo "Bucket does not exist. Creating: $BUCKET_NAME"
+            if [ "$REGION" = "us-east-1" ]; then
+              aws s3api create-bucket \
+                --bucket "$BUCKET_NAME"
+            else
+              aws s3api create-bucket \
+                --bucket "$BUCKET_NAME" \
+                --region "$REGION" \
+                --create-bucket-configuration LocationConstraint="$REGION"
+            fi
+
+            # Add a lifecycle rule to delete old Lambda ZIPs after 7 days
+            aws s3api put-bucket-lifecycle-configuration \
+              --bucket "$BUCKET_NAME" \
+              --lifecycle-configuration '{
+                "Rules": [
+                  {
+                    "ID": "DeleteOldLambdaZips",
+                    "Prefix": "email-poller/",
+                    "Status": "Enabled",
+                    "Expiration": {
+                      "Days": 7
+                    }
+                  }
+                ]
+              }'
+          else
+            echo "Bucket already exists: $BUCKET_NAME"
+          fi
+
+      - name: Upload Lambda zip to S3
+        run: |
+          aws s3 cp $ZIP_PATH s3://$BUCKET_NAME/$CODE_KEY
