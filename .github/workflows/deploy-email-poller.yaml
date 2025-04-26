@@ -2,12 +2,6 @@ name: Deploy Email Poller Lambda
 description: Deploys the Email Poller Lambda function to AWS using CloudFormation.
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'email-poller/**'
-      - '.github/workflows/deploy-email-poller.yaml'
   workflow_dispatch:
 
 env:

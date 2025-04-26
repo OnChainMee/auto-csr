@@ -34,3 +34,13 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.REGION }}
 
+      - name: Install dependencies and zip Lambda package
+        run: |
+          mkdir -p package
+          pip install -r requirements.txt -t package
+          cp csr-agent/*.py package/
+          cp eamil-poller/*.py package/
+          cd package
+          zip -r ../${ZIP_PATH} .
+          cd ..
+  

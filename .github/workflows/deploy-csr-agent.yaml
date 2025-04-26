@@ -2,12 +2,6 @@ name: Deploy CSR Agent
 description: Deploys the CSR Agent to AWS using CloudFormation.
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'csr-agent/**'
-      - '.github/workflows/deploy-csr-agent.yaml'
   workflow_dispatch:
 
 env:
