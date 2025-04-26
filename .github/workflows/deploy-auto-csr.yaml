@@ -19,7 +19,8 @@ env:
   EMAIL_STACK_NAME: email-poller-stack-v2
   BUCKET_NAME: auto-csr-code-bucket
   CODE_KEY: auto-csr/auto-csr-${{ github.sha }}.zip
-  TEMPLATE_PATH: infra/auto-csr-template.yaml
+  CSR_TEMPLATE_PATH: infra/auto-csr-template.yaml
+  EMAIL_TEMPLATE_PATH: infra/email-poller-template.yaml
   ZIP_PATH: auto-csr-${{ github.sha }}.zip
 
 jobs:
@@ -88,7 +89,7 @@ jobs:
         run: |
           aws cloudformation deploy \
             --stack-name $CSR_STACK_NAME \
-            --template-file $TEMPLATE_PATH \
+            --template-file $CSR_TEMPLATE_PATH \
             --parameter-overrides \
               CodeBucket=$BUCKET_NAME \
               CodeKey=$CODE_KEY \
@@ -120,7 +121,7 @@ jobs:
         run: |
           aws cloudformation deploy \
             --stack-name $EMAIL_STACK_NAME \
-            --template-file $TEMPLATE_PATH \
+            --template-file $EMAIL_TEMPLATE_PATH \
             --parameter-overrides \
               CodeBucket=$BUCKET_NAME \
               CodeKey=$CODE_KEY \
