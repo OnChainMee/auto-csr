@@ -16,7 +16,6 @@ env:
   REGION: us-east-1
   STACK_NAME: auto-csr-stack
   BUCKET_NAME: auto-csr-code-bucket
-  EMAIL_BUCKET_NAME: auto-csr-inbound-email-bucket
   CODE_KEY: auto-csr/auto-csr-${{ github.sha }}.zip
   TEMPLATE_PATH: infra/auto-csr-template.yaml
   ZIP_PATH: auto-csr-${{ github.sha }}.zip
@@ -79,33 +78,16 @@ jobs:
             echo "Bucket already exists: $BUCKET_NAME"
           fi
 
-      - name: Create inbound email bucket if it doesn't exist
-        run: |
-          if ! aws s3api head-bucket --bucket "$EMAIL_BUCKET_NAME" 2>/dev/null; then
-            echo "Bucket does not exist. Creating: $EMAIL_BUCKET_NAME"
-            if [ "$REGION" = "us-east-1" ]; then
-              aws s3api create-bucket \
-                --bucket "$EMAIL_BUCKET_NAME"
-            else
-              aws s3api create-bucket \
-                --bucket "$EMAIL_BUCKET_NAME" \
-                --region "$REGION" \
-                --create-bucket-configuration LocationConstraint="$REGION"
-            fi
-          else
-            echo "Bucket already exists: $EMAIL_BUCKET_NAME"
-          fi
-
       - name: Upload Lambda zip to S3
         run: |
           aws s3 cp $ZIP_PATH s3://$BUCKET_NAME/$CODE_KEY
 
-      #- name: Deploy CloudFormation stack
-      #  run: |
-      #    aws cloudformation deploy \
-      #      --stack-name $STACK_NAME \
-      #      --template-file $TEMPLATE_PATH \
-      #      --parameter-overrides \
-      #        CodeBucket=$BUCKET_NAME \
-      #        CodeKey=$CODE_KEY \
-      #      --capabilities CAPABILITY_NAMED_IAM
+      - name: Deploy CloudFormation stack
+        run: |
+          aws cloudformation deploy \
+            --stack-name $STACK_NAME \
+            --template-file $TEMPLATE_PATH \
+            --parameter-overrides \
+              CodeBucket=$BUCKET_NAME \
+              CodeKey=$CODE_KEY \
+            --capabilities CAPABILITY_NAMED_IAM
