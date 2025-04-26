@@ -80,4 +80,4 @@ Resources:
       NotificationConfiguration:
         LambdaConfigurations:
           - Event: s3:ObjectCreated:*
-            Function: !GetAtt S3TriggerLambda.Arn
+            Function: !GetAtt CsrAgentFunction.Arn
