@@ -67,3 +67,17 @@ Resources:
       Environment:
         Variables:
           INBOUND_EMAIL_BUCKET: !Ref InboundEmailBucket
+
+  TriggerBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref InboundEmailBucket
+
+  S3EventNotification:
+    Type: AWS::S3::BucketNotification
+    Properties:
+      Bucket: !Ref TriggerBucket
+      NotificationConfiguration:
+        LambdaConfigurations:
+          - Event: s3:ObjectCreated:*
+            Function: !GetAtt S3TriggerLambda.Arn
