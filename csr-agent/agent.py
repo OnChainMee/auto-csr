@@ -25,3 +25,8 @@ def new_email(event, context):
             print(f"Error processing file {key}: {e}")
 
     return {"statusCode": 200}
+
+
+def categorize_email(email_body: str) -> str:
+    # TODO
+    pass
