@@ -1,5 +1,6 @@
 import json
 import boto3
+from email_categorizer.email_categorizer import EmailCategorizer
 
 s3 = boto3.client('s3')
 
@@ -19,6 +20,9 @@ def new_email(event, context):
             print("Parsed JSON content:")
             print(json.dumps(data, indent=2))
 
+            email_category = categorize_email(data['snippet'])
+            print(f"Email category: {email_category}")
+            
             # TODO: agent processing logic here
 
         except Exception as e:
@@ -28,5 +32,5 @@ def new_email(event, context):
 
 
 def categorize_email(email_body: str) -> str:
-    # TODO
-    pass
+    email_categorizer = EmailCategorizer()
+    return email_categorizer.categorize_email(email_body)
