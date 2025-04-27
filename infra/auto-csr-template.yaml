@@ -46,6 +46,14 @@ Resources:
                   - s3:GetObject
                   - s3:ListBucket
                 Resource: "*"
+        - PolicyName: AllowInvokeSageMakerEndpoint
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - sagemaker:InvokeEndpoint
+                Resource: arn:aws:sagemaker:us-east-1:084828574081:endpoint/email-categorizer-endpoint
 
   CsrAgentFunction:
     Type: AWS::Lambda::Function
@@ -72,7 +80,3 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: auto-csr-inbound-email-bucket
-      # NotificationConfiguration:
-      #   LambdaConfigurations:
-      #     - Event: s3:ObjectCreated:*
-      #       Function: !GetAtt CsrAgentFunction.Arn
