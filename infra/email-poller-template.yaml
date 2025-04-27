@@ -116,4 +116,4 @@ Resources:
                   - s3:PutObject
                   - s3:HeadObject
                   - s3:GetObject
-                Resource: !Sub "arn:aws:s3:::${InboundEmailBucket}"
+                Resource: !Sub "arn:aws:s3:::${InboundEmailBucket}/emails/*"
