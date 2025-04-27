@@ -5,6 +5,8 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
+BASE_DIR = os.path.dirname(__file__)
+
 
 def load_secret_from_aws(secret_name):
     client = boto3.client('secretsmanager')
@@ -20,11 +22,13 @@ def save_secret_to_aws(secret_name, binary_data):
 
 def get_credentials():
     creds = None
+    token_path = os.path.join(BASE_DIR, "token.pickle")
+    credentials_path = os.path.join(BASE_DIR, "credentials.json")
 
     # === LOCAL DEV: Load from local files if available ===
-    if os.path.exists("token.pickle") and os.path.exists("credentials.json"):
+    if os.path.exists(token_path) and os.path.exists(credentials_path):
         print("🔓 Loading Gmail credentials from local files...")
-        with open("token.pickle", "rb") as token_file:
+        with open(token_path, "rb") as token_file:
             creds = pickle.load(token_file)
     else:
         print("🔐 Loading Gmail credentials from AWS Secrets Manager...")
@@ -48,8 +52,8 @@ def get_credentials():
                 raise Exception("❌ Token is invalid and cannot refresh. Re-authentication required locally to generate new token.pickle")
 
         # === SAVE updated token ===
-        if os.path.exists("token.pickle"):
-            with open("token.pickle", "wb") as token_file:
+        if os.path.exists(token_path):
+            with open(token_path, "wb") as token_file:
                 pickle.dump(creds, token_file)
         else:
             save_secret_to_aws("GmailOAuthToken", pickle.dumps(creds))

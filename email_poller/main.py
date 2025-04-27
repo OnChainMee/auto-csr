@@ -1,6 +1,6 @@
-from config import get_credentials
-from email_store import EmailStore
-from gmail_client import (
+from email_poller.config import get_credentials
+from email_poller.email_store import EmailStore
+from email_poller.gmail_client import (
     build_gmail_service,
     list_latest_messages,
     read_message,
