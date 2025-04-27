@@ -6,14 +6,14 @@ on:
     branches:
       - main
     paths:
-      - 'email-categorizer/**'
+      - 'email_categorizer/**'
       - '.github/workflows/deploy-email-categorizer.yaml'
   workflow_dispatch:
 
 env:
   REGION: us-east-1
   STACK_NAME: email-categorizer-stack
-  TEMPLATE_PATH: email-categorizer/template.yaml
+  TEMPLATE_PATH: email_categorizer/template.yaml
 
 jobs:
   deploy:

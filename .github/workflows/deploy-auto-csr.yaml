@@ -6,8 +6,8 @@ on:
     branches:
       - main
     paths:
-      - 'csr-agent/**'
-      - 'email-poller/**'
+      - 'csr_agent/**'
+      - 'email_poller/**'
       - '.github/workflows/deploy-auto-csr.yaml'
       - 'infra/auto-csr-template.yaml'
       - 'infra/email-poller-template.yaml'
@@ -42,8 +42,8 @@ jobs:
         run: |
           mkdir -p package
           pip install -r requirements.txt -t package
-          cp csr-agent/*.py package/
-          cp email-poller/*.py package/
+          cp -r csr_agent package/
+          cp -r email-poller package/
           cd package
           zip -r ../${ZIP_PATH} .
           cd ..

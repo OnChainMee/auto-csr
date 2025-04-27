@@ -28,7 +28,7 @@ Resources:
     Properties:
       FunctionName: email-poller-v2
       Runtime: python3.10
-      Handler: main.main
+      Handler: email_poller.main.main
       Role: !GetAtt EmailPollerLambdaRole.Arn
       Timeout: 30
       MemorySize: 128
