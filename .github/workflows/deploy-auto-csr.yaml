@@ -43,7 +43,7 @@ jobs:
           mkdir -p package
           pip install -r requirements.txt -t package
           cp -r csr_agent package/
-          cp -r email-poller package/
+          cp -r email_poller package/
           cd package
           zip -r ../${ZIP_PATH} .
           cd ..
@@ -69,7 +69,7 @@ jobs:
                 "Rules": [
                   {
                     "ID": "DeleteOldLambdaZips",
-                    "Prefix": "email-poller/",
+                    "Prefix": "csr_agent/",
                     "Status": "Enabled",
                     "Expiration": {
                       "Days": 7
