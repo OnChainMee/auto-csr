@@ -44,6 +44,7 @@ jobs:
           pip install -r requirements.txt -t package
           cp -r csr_agent package/
           cp -r email_poller package/
+          cp -r email_categorizer package/
           cd package
           zip -r ../${ZIP_PATH} .
           cd ..
