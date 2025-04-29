@@ -25,9 +25,7 @@ def new_email(event, context):
 
             email_category = categorize_email(data['snippet'])
             print(f"Email category: {email_category}")
-            
-            # TODO: agent processing logic here
-
+            process_email(email_category, data['snippet'])
         except Exception as e:
             print(f"Error processing file {key}: {e}")
 
@@ -37,6 +35,7 @@ def new_email(event, context):
 def categorize_email(email_body: str) -> str:
     email_categorizer = EmailCategorizer()
     return email_categorizer.categorize_email(email_body)
+
 
 def process_email(email_category: str, email_body: str) -> None:
     match email_category:
