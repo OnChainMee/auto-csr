@@ -54,6 +54,14 @@ Resources:
                 Action:
                   - sagemaker:InvokeEndpoint
                 Resource: arn:aws:sagemaker:us-east-1:084828574081:endpoint/email-categorizer-endpoint
+        - PolicyName: AllowSecretsAccess
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - secretsmanager:GetSecretValue
+                Resource: arn:aws:secretsmanager:us-east-1:084828574081:secret:openai/api_key-*
 
   CsrAgentFunction:
     Type: AWS::Lambda::Function

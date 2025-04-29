@@ -8,6 +8,7 @@ on:
     paths:
       - 'csr_agent/**'
       - 'email_poller/**'
+      - 'email_writer/**'
       - '.github/workflows/deploy-auto-csr.yaml'
       - 'infra/auto-csr-template.yaml'
       - 'infra/email-poller-template.yaml'
@@ -45,6 +46,7 @@ jobs:
           cp -r csr_agent package/
           cp -r email_poller package/
           cp -r email_categorizer package/
+          cp -r email_writer package/
           cd package
           zip -r ../${ZIP_PATH} .
           cd ..
