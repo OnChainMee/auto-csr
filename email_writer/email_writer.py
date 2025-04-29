@@ -2,6 +2,14 @@ import boto3
 import os
 import requests
 
+
+def get_api_key():
+    secrets_client = boto3.client("secretsmanager")
+    response = secrets_client.get_secret_value(SecretId="openai/api_key")
+    secret = json.loads(response["SecretString"])
+    return secret["OPENAI_API_KEY"]
+
+
 OPEN_AI_API_KEY = os.getenv("OPENAI_API_KEY") or get_api_key()
 OPEN_AI_API_URL = "https://api.openai.com/v1/chat/completions"
 REQUEST_HADERS = {
@@ -43,10 +51,3 @@ class EmailWriter:
 if __name__ == '__main__':
     email_writer = EmailWriter()
     email_writer.write_customer_return_email()
-
-
-def get_api_key():
-    secrets_client = boto3.client("secretsmanager")
-    response = secrets_client.get_secret_value(SecretId="openai/api_key")
-    secret = json.loads(response["SecretString"])
-    return secret["OPENAI_API_KEY"]
