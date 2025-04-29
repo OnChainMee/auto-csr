@@ -16,7 +16,7 @@ Parameters:
 
   PollInterval:
     Type: Number
-    Default: 10
+    Default: 100
     Description: Polling interval in minutes
 
 Conditions:
