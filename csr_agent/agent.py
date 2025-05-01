@@ -30,7 +30,7 @@ def new_email(event, context):
 
             email_category = categorize_email(data['snippet'])
             print(f"Email category: {email_category}")
-            process_email(email_category, data['snippet'])
+            process_email(email_category, data['snippet'], data['id'])
         except Exception as e:
             print(f"Error processing file {key}: {e}")
 
