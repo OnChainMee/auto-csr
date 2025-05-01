@@ -46,7 +46,7 @@ class EmailWriter:
             print(response.json()["choices"][0]["message"]["content"])
         else:
             print(f"Error {response.status_code}: {response.text}")
-        return ""
+        return response.json()["choices"][0]["message"]["content"]
 
 
 if __name__ == '__main__':
