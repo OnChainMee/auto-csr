@@ -90,10 +90,10 @@ def send_reply(service, msg_id, reply_body):
     subject = _get_header(headers, 'Subject')
 
     message_id = _get_header(headers, 'Message-ID')
+    mime_msg = MIMEText(reply_body)
     mime_msg['In-Reply-To'] = message_id
     mime_msg['References'] = message_id
 
-    mime_msg = MIMEText(reply_body)
     mime_msg['to'] = to_addr
     mime_msg['subject'] = f"Re: {subject}"
 
