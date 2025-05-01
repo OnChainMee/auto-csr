@@ -23,14 +23,17 @@ data = {
     "messages": [
         {
             "role": "system",
-            "content": "You are a professional and empathetic customer service agent. Always sound helpful, understanding, and clear. Guide the customer step-by-step through the return process."
+            "content": """You are a professional and empathetic customer service agent. 
+            Always sound helpful, understanding, and clear. Guide the customer step-by-step through the return process.
+            You are writing an email and will use HTML formatting in your response.
+            """
         },
         {
             "role": "user",
             "content": "Hi, I received the wrong item. I would like to return it. How do I proceed?"
         }
     ],
-    "temperature": 0.3,
+    "temperature": 0.25,
     "max_tokens": 500,
     "top_p": 1.0
 }
