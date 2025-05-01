@@ -2,6 +2,11 @@ import json
 import boto3
 from email_categorizer.email_categorizer import EmailCategorizer
 from email_writer.email_writer import EmailWriter
+from email_poller.config import get_credentials
+from email_poller.gmail_client import (
+    build_gmail_service,
+    send_reply
+)
 
 s3 = boto3.client('s3')
 email_writer = EmailWriter()
@@ -37,12 +42,14 @@ def categorize_email(email_body: str) -> str:
     return email_categorizer.categorize_email(email_body)
 
 
-def process_email(email_category: str, email_body: str) -> None:
+def process_email(email_category: str, email_body: str, msg_id: str) -> None:
     match email_category:
         case "help with return":
             email_response = email_writer.write_customer_return_email()
             print("Email response:")
             print(email_response)
+            gmail_service = build_gmail_service(get_credentials())
+            send_reply(gmail_service, msg_id, email_response)
             return
         case "customer complaint":
             return

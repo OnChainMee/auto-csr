@@ -78,3 +78,17 @@ def _get_header(headers, name):
             return header['value']
     return '(not found)'
 
+def send_reply(service, msg_id, reply_body):
+    """
+    Send a reply to a Gmail message.
+    """
+    message = service.users().messages().get(userId='me', id=msg_id).execute()
+    thread_id = message['threadId']
+
+    reply_message = {
+        'raw': reply_body,
+        'threadId': thread_id
+    }
+
+    service.users().messages().send(userId='me', body=reply_message).execute()
+    print(f"Replied to message ID: {msg_id}")
