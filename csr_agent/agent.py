@@ -30,7 +30,7 @@ def new_email(event, context):
 
             email_category = categorize_email(data['snippet'])
             print(f"Email category: {email_category}")
-            process_email(email_category, data['snippet'], data['id'])
+            process_email(email_category, data['id'])
         except Exception as e:
             print(f"Error processing file {key}: {e}")
 
@@ -42,14 +42,14 @@ def categorize_email(email_body: str) -> str:
     return email_categorizer.categorize_email(email_body)
 
 
-def process_email(email_category: str, email_body: str, msg_id: str) -> None:
+def process_email(email_category: str, message_id: str) -> None:
     match email_category:
         case "help with return":
             email_response = email_writer.write_customer_return_email()
             print("Email response:")
             print(email_response)
             gmail_service = build_gmail_service(get_credentials())
-            send_reply(gmail_service, msg_id, email_response)
+            send_reply(gmail_service, message_id, email_response)
             return
         case "customer complaint":
             return

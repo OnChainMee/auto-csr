@@ -1,5 +1,8 @@
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+import base64
+from email.mime.text import MIMEText
+
 
 def build_gmail_service(creds):
     """
@@ -76,19 +79,30 @@ def _get_header(headers, name):
     for header in headers:
         if header['name'].lower() == name.lower():
             return header['value']
-    return '(not found)'
+    return None
 
 def send_reply(service, msg_id, reply_body):
-    """
-    Send a reply to a Gmail message.
-    """
-    message = service.users().messages().get(userId='me', id=msg_id).execute()
+    message = service.users().messages().get(userId='me', id=msg_id, format='full').execute()
     thread_id = message['threadId']
 
+    headers = message['payload']['headers']
+    to_addr = _get_header(headers, 'From')
+    subject = _get_header(headers, 'Subject')
+
+    message_id = _get_header(headers, 'Message-ID')
+    mime_msg['In-Reply-To'] = message_id
+    mime_msg['References'] = message_id
+
+    mime_msg = MIMEText(reply_body)
+    mime_msg['to'] = to_addr
+    mime_msg['subject'] = f"Re: {subject}"
+
+    raw = base64.urlsafe_b64encode(mime_msg.as_bytes()).decode()
+
     reply_message = {
-        'raw': reply_body,
+        'raw': raw,
         'threadId': thread_id
     }
 
     service.users().messages().send(userId='me', body=reply_message).execute()
-    print(f"Replied to message ID: {msg_id}")
+    print(f"Replied to: {to_addr} | Subject: Re: {subject}")
