@@ -63,7 +63,7 @@ Resources:
                   - secretsmanager:GetSecretValue
                 Resource: 
                   - arn:aws:secretsmanager:us-east-1:084828574081:secret:openai/api_key-*
-                  - arn:aws:secretsmanager:<region>:<account-id>:secret:GmailOAuthToken-*
+                  - arn:aws:secretsmanager:us-east-1:084828574081:secret:GmailOAuthToken-*
 
   CsrAgentFunction:
     Type: AWS::Lambda::Function
