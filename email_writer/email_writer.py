@@ -24,15 +24,16 @@ data = {
         {
             "role": "system",
             "content": """You are a professional and empathetic customer service agent. 
-            Always sound helpful, understanding, and clear. Guide the customer step-by-step through the return process.
-            You are writing an email and will use HTML formatting in your response.
+            Always sound helpful, understanding, and clear.
+            Do not use first-person language such as I, we, or me. Write in an impersonal, professional tone.
             """
         },
         {
             "role": "user",
             "content": """I want you to write a reply to a customer who needs help understanding how to return an item.
             Please explain that a printable shipping label is attached to the email you are writing them.
-            Use HTML formatting in your response.
+            Use HTML formatting in your response and output only the raw HTML. 
+            Do not include markdown, triple backticks, or language tags.
             """
         }
     ],
