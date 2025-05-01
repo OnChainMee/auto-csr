@@ -4,7 +4,10 @@ import boto3
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 
-SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
+SCOPES = [
+    'https://www.googleapis.com/auth/gmail.modify',
+    'https://www.googleapis.com/auth/gmail.send'
+]
 BASE_DIR = os.path.dirname(__file__)
 
 
@@ -24,6 +27,7 @@ def get_credentials():
     creds = None
     token_path = os.path.join(BASE_DIR, "token.pickle")
     credentials_path = os.path.join(BASE_DIR, "credentials.json")
+    # print(f"Credentials path: {credentials_path}")
 
     # === LOCAL DEV: Load from local files if available ===
     if os.path.exists(token_path) and os.path.exists(credentials_path):
@@ -42,17 +46,17 @@ def get_credentials():
             creds.refresh(Request())
         else:
             # Start OAuth flow — only possible in LOCAL environments with user interaction
-            if os.path.exists("credentials.json"):
+            if os.path.exists(credentials_path):
                 # This is probably local dev
                 print("⚠️ No valid token. Rebuilding credentials from client secret...")
-                flow = InstalledAppFlow.from_client_secrets_file("credentials.json", SCOPES)
+                flow = InstalledAppFlow.from_client_secrets_file(credentials_path, SCOPES)
                 creds = flow.run_local_server(port=0)
             else:
                 # AWS — can't complete flow without UI
                 raise Exception("❌ Token is invalid and cannot refresh. Re-authentication required locally to generate new token.pickle")
 
         # === SAVE updated token ===
-        if os.path.exists(token_path):
+        if os.path.exists(credentials_path):
             with open(token_path, "wb") as token_file:
                 pickle.dump(creds, token_file)
         else:
