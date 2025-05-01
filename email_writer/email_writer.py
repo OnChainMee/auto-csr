@@ -30,7 +30,10 @@ data = {
         },
         {
             "role": "user",
-            "content": "Hi, I received the wrong item. I would like to return it. How do I proceed?"
+            "content": """I want you to write a reply to a customer who needs help understanding how to return an item.
+            Please explain that a printable shipping label is attached to the email you are writing them.
+            Use HTML formatting in your response.
+            """
         }
     ],
     "temperature": 0.25,
