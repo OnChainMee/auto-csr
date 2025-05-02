@@ -58,7 +58,7 @@ Resources:
       ProductionVariants:
         - VariantName: AllTraffic
           ModelName: email-categorizer-model
-          InitialInstanceCount: 0
+          InitialInstanceCount: 1
           InstanceType: ml.m5.large
 
   EmailCategorizerEndpoint:
