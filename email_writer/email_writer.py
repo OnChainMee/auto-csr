@@ -34,6 +34,10 @@ data = {
             Please explain that a printable shipping label is attached to the email you are writing them.
             Use HTML formatting in your response and output only the raw HTML. 
             Do not include markdown, triple backticks, or language tags.
+            The email must start with the following text:
+            <p>Dear Customer,</p>
+            <p><i>This is an automated response.
+                  Include the label "HUMANCSR" in the subject or body of your reply to switch to a human representative.</i></p>
             """
         }
     ],
