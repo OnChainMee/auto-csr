@@ -129,6 +129,6 @@ jobs:
               CodeBucket=$BUCKET_NAME \
               CodeKey=$CODE_KEY \
               InboundEmailBucket=auto-csr-inbound-email-bucket \
-              PollInterval=2 \
+              PollInterval=1 \
             --capabilities CAPABILITY_NAMED_IAM
     
